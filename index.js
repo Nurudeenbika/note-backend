@@ -9,8 +9,6 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('dist'))
 
-const mongoose = require('mongoose')
-
 const password = process.argv[2]
 
 app.get('/api/notes', (request, response) => {

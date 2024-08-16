@@ -1,10 +1,23 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors')
+const Note = require('./models/note')
 
 app.use(express.json())
 app.use(cors())
 app.use(express.static('dist'))
+
+const mongoose = require('mongoose')
+
+const password = process.argv[2]
+
+app.get('/api/notes', (request, response) => {
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
+})
+
 
 let notes = [
     {
@@ -91,7 +104,7 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
